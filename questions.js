@@ -1,37 +1,17 @@
-// process.stdout.write("Hello ");
-// process.stdout.write("World \n\n\n");
+const collectAnswers = require('./lib/collectAnswers');
 
 const questions = [
-  "What is your name?",
-  "What would you rather be doing?",
-  "What is your preferred programming language?"
+  "What is your name? ",
+  "Where do you live? ",
+  "What are your plans for node js? "
 ];
 
-const ask = (i=0) => {
-  process.stdout.write(`\n\n\n ${questions[i]}`);
-  process.stdout.write(` > `);
-}
+const answerEvents = collectAnswers(questions);
 
-ask();
-
-const answers = [];
-
-process.stdin.on("data", data => {
-  answers.push(data.toString().trim());
-
-  if (answers.length < questions.length) {
-    ask(answers.length);
-  } else {
-    process.exit();
-
-  }
+answerEvents.on("answer", answer => console.log(`questions answered: ${answer}`));
+answerEvents.on("complete", answers => {
+  console.log("thank u for your answers. ")
+  console.log(answers);
 });
 
-process.on("exit", () => {
-  const [name, activity, lang] = answers;
-  console.log(`
-  Thanks for your answers.
-
-  Go ${activity} ${name} you can write ${lang} later.
-  `);
-})
+answerEvents.on("complete", () => process.exit());
