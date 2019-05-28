@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 8888;
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
@@ -16,12 +18,19 @@ app.get('/messages', (req, res) => {
   res.send(messages)
 })
 app.post('/messages', (req, res) => {
-  // console.log(req.body);
   messages.push(req.body);
+  io.emit('message', req.body);
   res.sendStatus(200);
 })
 
-app.listen(port, () => {
-  console.log(`Port listening on port ${port}`);
+io.on('connection', socket => {
+  console.log('a user is connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  })
+})
+
+http.listen(port, () => {
+  console.log(`Port listening on port: ${port}`);
 });
 

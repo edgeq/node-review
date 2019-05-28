@@ -13,12 +13,14 @@
     <div class="jumbotron mt-3">
 
       <h1 class="display-4">Express Messages</h1>
-      <input type="text" class="form-control mt-5" placeholder="Name">
+      <input type="text" id="name" class="form-control mt-5" placeholder="Name">
+      <br>
+      <textarea type="text" id="message" class="form-control mt-5" placeholder="Message"></textarea>
       <br>
       <button id="send" class="btn btn-success">Send</button>
 
     </div> <!-- end jumbotron -->
-    
+
     <div id="messages">
 
     </div> <!-- end messages -->
@@ -27,17 +29,22 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script>
+    const socket = io();
     $(() => {
       $("#send").click((e) => {
-        addMessages({name: 'Edge', message: 'Hi, from jQuery'});
+        let message = {name: $("#name").val(), message: $("#message").val()};
+        postMessage(message);
         e.preventDefault();
       })
       getMessages();
     })
 
-    function addMessages(message) {
-      $("#messages").append(`
+    socket.on('message', addMessage);
+
+    function addMessage(message) {
+      $("#messages").prepend(`
         <h4> ${message.name} </h4>
         <p> ${message.message} </p>
         `);
@@ -45,8 +52,11 @@
 
     function getMessages() {
       $.get('http://localhost:8888/messages', (data) => {
-        data.forEach(addMessages);
+        data.forEach(addMessage);
       })
+    }
+    function postMessage(message) {
+      $.post('http://localhost:8888/messages', message)
     }
   </script>
 </body>
