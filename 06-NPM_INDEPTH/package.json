@@ -1,0 +1,21 @@
+{
+  "name": "NPM_INDEPTH",
+  "version": "0.0.1",
+  "description": "Another foray into learning npm-based development",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon . --exec babel-node -e js",
+    "nodemonthis": "nodemon . --exec babel-node -e js"
+  },
+  "keywords": [],
+  "author": "EdgeQ",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1"
+  }
+}
