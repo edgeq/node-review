@@ -6,7 +6,8 @@ const feedbackRoute = require('./feedback');
 // starting with an export ensures I can use this logic somehwere else in the application
 module.exports = () => {
   router.get('/', (req, res, next) => {
-    return res.send('Index Served');
+    // render looks for views engine and views directory
+    return res.render('index');
   })
 
   router.use('/speakers', speakersRoute());
