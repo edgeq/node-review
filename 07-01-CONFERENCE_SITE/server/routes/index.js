@@ -10,6 +10,15 @@ module.exports = () => {
     return res.render('index');
   })
 
+  router.get('/index', (req, res, next) => {
+    // render looks for views engine and views directory
+    return res.render('index');
+  })
+  router.get('/home', (req, res, next) => {
+    // render looks for views engine and views directory
+    return res.render('index');
+  })
+
   router.use('/speakers', speakersRoute());
   router.use('/feedback', feedbackRoute());
 

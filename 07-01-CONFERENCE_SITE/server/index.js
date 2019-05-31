@@ -4,11 +4,12 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-//view controller
+//view controller - views are invoked with .render()
 app.set('view engine', 'pug');
 if(app.get('env') === 'development') {
   app.locals.pretty = true;
 }
+//all calls with .render() should default to the views folder
 app.set('views', path.join(__dirname, './views'));
 
 // routes
@@ -20,7 +21,7 @@ app.get('/favicon.ico', (req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  return next(createError(404), 'File not found');
+  return next(createError(404, 'File not found'))
 });
 
 app.use((err, req, res, next) => {

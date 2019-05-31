@@ -4,7 +4,7 @@ const router = express.Router();
 // starting with an export ensures I can use this logic somehwere else in the application
 module.exports = () => {
   router.get('/', (req, res, next) => {
-    return res.send('Speakers Go Here');
+    return res.render('speakers');
   });
 
   router.get('/:name', (req, res, next) => {
