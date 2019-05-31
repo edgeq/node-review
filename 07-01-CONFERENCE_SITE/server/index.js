@@ -9,7 +9,7 @@ app.set('view engine', 'pug');
 if(app.get('env') === 'development') {
   app.locals.pretty = true;
 }
-//all calls with .render() should default to the views folder
+//all calls with app.render() should default to the views folder
 app.set('views', path.join(__dirname, './views'));
 
 // routes
