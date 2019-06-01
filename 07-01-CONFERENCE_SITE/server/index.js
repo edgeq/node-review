@@ -3,6 +3,12 @@ const createError = require('http-errors');
 const path = require('path');
 const app = express();
 const port = 3000;
+// require configuration settings
+const configs = require('./config');
+const config = configs[app.get('env')];
+
+app.locals.title = config.sitename;
+
 
 //view controller - views are invoked with .render()
 app.set('view engine', 'pug');

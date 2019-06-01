@@ -7,16 +7,9 @@ const feedbackRoute = require('./feedback');
 module.exports = () => {
   router.get('/', (req, res, next) => {
     // render looks for views engine and views directory
-    return res.render('index');
-  })
-
-  router.get('/index', (req, res, next) => {
-    // render looks for views engine and views directory
-    return res.render('index');
-  })
-  router.get('/home', (req, res, next) => {
-    // render looks for views engine and views directory
-    return res.render('index');
+    return res.render('index', {
+      page: 'Home',
+    });
   })
 
   router.use('/speakers', speakersRoute());
